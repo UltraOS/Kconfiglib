@@ -4715,6 +4715,8 @@ class Symbol(object):
         Removes any user value from the symbol, as if the symbol had never
         gotten a user value via Kconfig.load_config() or Symbol.set_value().
         """
+        self._was_set = False
+
         if self.user_value is not None:
             self.user_loc = None
             self.user_value = None
@@ -5363,6 +5365,8 @@ class Choice(object):
         Resets the user value (mode) and user selection of the Choice, as if
         the user had never touched the mode or any of the choice symbols.
         """
+        self._was_set = False
+
         if self.user_value is not None or self.user_selection:
             self.user_loc = None
             self.user_value = self.user_selection = None

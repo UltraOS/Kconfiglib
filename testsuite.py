@@ -2041,6 +2041,12 @@ tests/Krecursive2:1
     c.load_config("Kconfiglib/tests/config_indented")
     verify_value("IGNOREME", "y")
 
+    c.unset_values()
+    c.load_config("Kconfiglib/tests/config_set_bool", replace=False)
+    c.unset_values()
+    c.load_config("Kconfiglib/tests/config_set_bool", replace=False)
+    verify_value("BOOL", "y")
+
     # Symbol order in headers and minimal configuration files should match
     # definition order, like in .config files
 
