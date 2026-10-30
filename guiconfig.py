@@ -339,7 +339,8 @@ def _create_ui():
     _tree.bind("<Right>", _tree_right_key)
     # Note: Binding this for the jump-to tree as well would cause issues due to
     # the Tk bug mentioned in _tree_open()
-    _tree.bind("<<TreeviewOpen>>", _tree_open)
+    _tree.bind("<<TreeviewOpen>>",
+               "{} %d".format(_tree.register(_tree_open)))
     # add=True to avoid overriding the description text update
     _tree.bind("<<TreeviewSelect>>", _update_menu_path, add=True)
 
@@ -1135,7 +1136,7 @@ def _tree_set_val(tri_val):
     return tree_set_val
 
 
-def _tree_open(_):
+def _tree_open(item):
     # Lazily populates the Kconfig tree when menus are opened in full-tree mode
 
     if _single_menu:
@@ -1145,7 +1146,7 @@ def _tree_open(_):
         # single-menu mode otherwise.
         return
 
-    node = _id_to_node[_tree.focus()]
+    node = _id_to_node[item or _tree.focus()]
     # _shown_full_nodes() includes nodes from menus rooted at symbols, so we
     # only need to check "real" menus and choices here
     if not isinstance(node.item, Symbol):
