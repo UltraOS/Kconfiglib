@@ -661,7 +661,7 @@ def _create_kconfig_tree(parent):
     Symbol_ = Symbol
     for node in _kconf.node_iter():
         item = node.item
-        insert("", "end", iid=id_(node),
+        insert("", "end", iid=str(id_(node)),
                values=item.name if item.__class__ is Symbol_ else "")
 
     return frame, tree
